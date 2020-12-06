@@ -1,5 +1,6 @@
 use std::fmt;
 
+// Start provided code
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
     pub val: i32,
@@ -12,23 +13,7 @@ impl ListNode {
         ListNode { next: None, val }
     }
 }
-
-impl fmt::Display for ListNode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut res = write!(f, "{}, ", self.val);
-        let mut next = &self.next;
-        while next.is_some() {
-            let v = next.as_ref().unwrap().val;
-            let x = match &next.as_ref().unwrap().next {
-                Some(_) => format!("{}, ", v),
-                None => format!("{}", v),
-            };
-            res = write!(f, "{}", x);
-            next = &next.as_ref().unwrap().next;
-        }
-        return res;
-    }
-}
+// End provided code
 
 // Wrapper type so we can define `fmt::Display` for `Option<Box<ListNode>>`
 pub struct ListNodeWrapper<'a>(&'a Option<Box<ListNode>>);
@@ -45,9 +30,31 @@ impl Wrap for Option<Box<ListNode>> {
 
 impl<'a> fmt::Display for ListNodeWrapper<'a> {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        match *self.0 {
-            Some(ref s) => write!(formatter, "{}", s),
-            None => write!(formatter, ""),
+        let mut node_opt = self.0;
+        while let Some(node) = node_opt {
+            let x = match &node.next {
+                Some(_) => format!("{}, ", node.val),
+                None => format!("{}", node.val),
+            };
+            write!(formatter, "{}", x)?;
+            node_opt = &node.next;
         }
+        return Ok(()); // Errors checked above via `?` operator
     }
 }
+
+pub fn reverse(list: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    let mut previous = None;
+    let mut current = list;
+
+    while let Some(ref mut cur) = current {
+        let next = cur.next.take();
+        cur.next = previous;
+
+        previous = current;
+        current = next;
+    }
+
+    return previous;
+}
+
