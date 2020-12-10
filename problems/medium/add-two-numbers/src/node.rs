@@ -15,6 +15,23 @@ impl ListNode {
 }
 // End provided code
 
+impl ListNode {
+    #[inline]
+    pub fn from_slice(values: &[i32]) -> Option<Box<ListNode>> {
+        let mut head = None;
+        let mut current = &mut head;
+
+        for &val in values {
+            current.replace(Box::new(ListNode::new(val)));
+            current = &mut current
+                .as_mut()
+                .expect("current always assigned on previous line")
+                .next;
+        }
+        return head;
+    }
+}
+
 // Wrapper type so we can define `fmt::Display` for `Option<Box<ListNode>>`
 pub struct ListNodeWrapper<'a>(&'a Option<Box<ListNode>>);
 
@@ -57,4 +74,3 @@ pub fn reverse(list: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 
     return previous;
 }
-
