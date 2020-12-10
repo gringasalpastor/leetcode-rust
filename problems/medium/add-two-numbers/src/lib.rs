@@ -43,16 +43,15 @@ mod tests {
 
     #[test]
     fn basics() {
-        let mut example1 = Some(Box::new(ListNode::new(1)));
-        example1.as_mut().unwrap().next = Some(Box::new(ListNode::new(2)));
-        example1.as_mut().unwrap().next.as_mut().unwrap().next = Some(Box::new(ListNode::new(3)));
+        let mut example1 = ListNode::from_slice(&[1, 2, 3]);
+        let example2 = ListNode::from_slice(&[1, 2, 3]);
 
-        let mut example2 = Some(Box::new(ListNode::new(1)));
-        example2.as_mut().unwrap().next = Some(Box::new(ListNode::new(2)));
-        example2.as_mut().unwrap().next.as_mut().unwrap().next = Some(Box::new(ListNode::new(3)));
-
-        // assert_eq!(example1.as_ref().unwrap().to_string(), "1, 2, 3");
         assert_eq!(example1.wrap().to_string(), "1, 2, 3");
+        assert_eq!(
+            ListNode::from_slice(&[1, 2, 3]).wrap().to_string(),
+            "1, 2, 3"
+        );
+        assert_eq!(ListNode::from_slice(&[]).wrap().to_string(), "");
         example1 = reverse(example1);
         // assert_eq!(example1.as_ref().unwrap().to_string(), "3, 2, 1");
 
