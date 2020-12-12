@@ -23,10 +23,7 @@ impl ListNode {
 
         for &val in values {
             current.replace(Box::new(ListNode::new(val)));
-            current = &mut current
-                .as_mut()
-                .expect("current always assigned on previous line")
-                .next;
+            current = &mut current.as_mut().expect("current always assigned on previous line").next;
         }
         return head;
     }
