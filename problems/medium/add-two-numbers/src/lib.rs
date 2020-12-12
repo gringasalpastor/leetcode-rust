@@ -9,31 +9,34 @@ impl Solution {
         l1: Option<Box<ListNode>>,
         l2: Option<Box<ListNode>>,
     ) -> Option<Box<ListNode>> {
-        let _l1 = reverse(l1);
-        let l2 = reverse(l2);
+        let mut l1 = &l1;
+        let mut l2 = &l2;
 
-        // let mut l1_l2_sum = l1.as_ref().unwrap().val + l2.as_ref().unwrap().val;
-        // let mut digit = l1_l2_sum % 10;
-        // let carry = if l1_l2_sum >= 10 { 1 } else { 0 };
-        // let mut sum_head = Some(Box::new(ListNode::new(digit)));
+        let mut head = None;
+        let mut current = &mut head;
+        let mut carry = 0;
 
-        // let zero_closure = || Box::new(ListNode::new(0));
+        while l1.is_some() || l2.is_some() {
+            let sum =  l1.as_ref().map_or(0, |n| n.val) + l2.as_ref().map_or(0, |n| n.val) + carry;
+            let digit = sum % 10;
+            carry = sum / 10;
 
-        // while l1.is_some() || l2.is_some() {
-        //     l1_l2_sum = match l1 {
-        //         Some(ref x) => x.val,
-        //         None => 0,
-        //     } + match l2 {
-        //         Some(ref x) => x.val,
-        //         None => 0,
-        //     };
-        //     // digit = l1_l2_sum % 10;
-        //     // carry = if l1_l2_sum >= 10 {1} else {0};
+            current.replace(Box::new(ListNode::new(digit)));
+            current = &mut current
+                .as_mut()
+                .expect("current always assigned on previous line")
+                .next;
 
-        //     // sum = Some(Box::new(ListNode::new(digit)));
-        // }
+            if let Some(l) = l1 {
+                l1 = &l.next;
+            }
+            if let Some(l) = l2 {
+                l2 = &l.next;
+            }
 
-        return l2;
+        }
+
+        return head;
     }
 }
 
@@ -43,18 +46,13 @@ mod tests {
 
     #[test]
     fn basics() {
-        let mut example1 = ListNode::from_slice(&[1, 2, 3]);
-        let example2 = ListNode::from_slice(&[1, 2, 3]);
+        let empty = ListNode::from_slice(&[]);
+        let ex123 = ListNode::from_slice(&[1, 2, 3]);
+        let ex123_rev = reverse(ListNode::from_slice(&[1, 2, 3]));
 
-        assert_eq!(example1.wrap().to_string(), "1, 2, 3");
-        assert_eq!(
-            ListNode::from_slice(&[1, 2, 3]).wrap().to_string(),
-            "1, 2, 3"
-        );
-        assert_eq!(ListNode::from_slice(&[]).wrap().to_string(), "");
-        example1 = reverse(example1);
-        // assert_eq!(example1.as_ref().unwrap().to_string(), "3, 2, 1");
-
-        Solution::add_two_numbers(example1, example2);
+        assert_eq!(ex123_rev.wrap().to_string(), "3, 2, 1");
+        assert_eq!(ex123.wrap().to_string(), "1, 2, 3");
+        assert_eq!(empty.wrap().to_string(), "");
+        assert_eq!(Solution::add_two_numbers(ex123_rev, ex123).wrap().to_string(), "4, 4, 4");
     }
 }
