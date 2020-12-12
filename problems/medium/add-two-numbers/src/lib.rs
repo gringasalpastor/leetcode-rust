@@ -17,7 +17,7 @@ impl Solution {
         let mut carry = 0;
 
         while l1.is_some() || l2.is_some() {
-            let sum =  l1.as_ref().map_or(0, |n| n.val) + l2.as_ref().map_or(0, |n| n.val) + carry;
+            let sum = l1.as_ref().map_or(0, |n| n.val) + l2.as_ref().map_or(0, |n| n.val) + carry;
             let digit = sum % 10;
             carry = sum / 10;
 
@@ -33,7 +33,6 @@ impl Solution {
             if let Some(l) = l2 {
                 l2 = &l.next;
             }
-
         }
 
         return head;
@@ -53,6 +52,11 @@ mod tests {
         assert_eq!(ex123_rev.wrap().to_string(), "3, 2, 1");
         assert_eq!(ex123.wrap().to_string(), "1, 2, 3");
         assert_eq!(empty.wrap().to_string(), "");
-        assert_eq!(Solution::add_two_numbers(ex123_rev, ex123).wrap().to_string(), "4, 4, 4");
+        assert_eq!(
+            Solution::add_two_numbers(ex123_rev, ex123)
+                .wrap()
+                .to_string(),
+            "4, 4, 4"
+        );
     }
 }
