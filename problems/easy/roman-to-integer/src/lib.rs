@@ -1,5 +1,7 @@
 pub struct Solution;
 
+use std::iter::Peekable;
+
 fn lookup_single(c: char) -> i32 {
     match c {
         'I' => 1,
@@ -13,7 +15,7 @@ fn lookup_single(c: char) -> i32 {
     }
 }
 
-fn lookup_pair<I: Iterator<Item = char>>(letters: (char, char), iter: std::iter::Peekable<I>) -> i32 {
+fn lookup_pair<I: Iterator<Item = char>>(letters: (char, char), iter: Peekable<I>) -> i32 {
     (match letters {
         ('I', 'V') => -1,
         ('I', 'X') => -1,
@@ -25,7 +27,7 @@ fn lookup_pair<I: Iterator<Item = char>>(letters: (char, char), iter: std::iter:
     } + roman_to_int_helper(iter) )
 }
 
-fn roman_to_int_helper<I: Iterator<Item = char>>(mut iter: std::iter::Peekable<I>) -> i32 {
+fn roman_to_int_helper<I: Iterator<Item = char>>(mut iter: Peekable<I>) -> i32 {
     let c = iter.next().unwrap_or('_');
     if let Some(&c_next) = iter.peek() {
         return lookup_pair((c, c_next), iter);
