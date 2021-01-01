@@ -41,20 +41,19 @@ mod tests {
 
     #[test]
     fn basics() {
-        let ex123 = ListNode::from_slice(&[1, 2, 3]);
-        let ex321 = ListNode::from_slice(&[3, 2, 1]);
+        let atn = Solution::add_two_numbers;
+        let f_s = ListNode::from_slice;
 
-        assert_eq!(Solution::add_two_numbers(ex321, ex123).wrap().to_string(), "4, 4, 4");
+        let ex123 = f_s(&[1, 2, 3]);
+        let ex321 = f_s(&[3, 2, 1]);
+        assert_eq!(atn(ex321, ex123).wrap().to_string(), "4, 4, 4");
 
-        let ex243 = ListNode::from_slice(&[2, 4, 3]);
-        let ex564 = ListNode::from_slice(&[5, 6, 4]);
-        assert_eq!(Solution::add_two_numbers(ex243, ex564).wrap().to_string(), "7, 0, 8");
+        let ex243 = f_s(&[2, 4, 3]);
+        let ex564 = f_s(&[5, 6, 4]);
+        assert_eq!(atn(ex243, ex564).wrap().to_string(), "7, 0, 8");
 
-        let ex9999999 = ListNode::from_slice(&[9, 9, 9, 9, 9, 9, 9]);
-        let ex9999 = ListNode::from_slice(&[9, 9, 9, 9]);
-        assert_eq!(
-            Solution::add_two_numbers(ex9999999, ex9999).wrap().to_string(),
-            "8, 9, 9, 9, 0, 0, 0, 1"
-        );
+        let ex9999999 = f_s(&[9, 9, 9, 9, 9, 9, 9]);
+        let ex9999 = f_s(&[9, 9, 9, 9]);
+        assert_eq!(atn(ex9999999, ex9999).wrap().to_string(), "8, 9, 9, 9, 0, 0, 0, 1");
     }
 }
