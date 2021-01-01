@@ -1,5 +1,5 @@
 [package]
-name = "add-two-numbers"
+name = "merge-two-sorted-lists"
 version = "0.1.0"
 authors = ["mike <220162+gringasalpastor@users.noreply.github.com>"]
 edition = "2018"
