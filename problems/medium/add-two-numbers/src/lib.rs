@@ -1,6 +1,4 @@
-pub mod node;
-
-use node::*;
+use listnode::*;
 
 pub struct Solution;
 
@@ -43,13 +41,9 @@ mod tests {
 
     #[test]
     fn basics() {
-        let empty = ListNode::from_slice(&[]);
         let ex123 = ListNode::from_slice(&[1, 2, 3]);
         let ex321 = ListNode::from_slice(&[3, 2, 1]);
 
-        assert_eq!(ex321.wrap().to_string(), "3, 2, 1");
-        assert_eq!(ex123.wrap().to_string(), "1, 2, 3");
-        assert_eq!(empty.wrap().to_string(), "");
         assert_eq!(Solution::add_two_numbers(ex321, ex123).wrap().to_string(), "4, 4, 4");
 
         let ex243 = ListNode::from_slice(&[2, 4, 3]);

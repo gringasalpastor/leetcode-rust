@@ -1,6 +1,6 @@
 use std::fmt;
 
-// Start provided code
+// START PROVIDED CODE
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
     pub val: i32,
@@ -13,10 +13,9 @@ impl ListNode {
         ListNode { next: None, val }
     }
 }
-// End provided code
+// END PROVIDED CODE
 
 impl ListNode {
-    #[inline]
     pub fn from_slice(values: &[i32]) -> Option<Box<ListNode>> {
         let mut head = None;
         let mut current = &mut head;
@@ -26,6 +25,21 @@ impl ListNode {
             current = &mut current.as_mut().expect("current always assigned on previous line").next;
         }
         return head;
+    }
+
+    pub fn reverse(list: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        let mut previous = None;
+        let mut current = list;
+
+        while let Some(ref mut cur) = current {
+            let next = cur.next.take();
+            cur.next = previous;
+
+            previous = current;
+            current = next;
+        }
+
+        return previous;
     }
 }
 
@@ -54,5 +68,22 @@ impl<'a> fmt::Display for ListNodeWrapper<'a> {
             node_opt = &node.next;
         }
         return Ok(()); // Errors checked above via `?` operator
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn it_works() {
+        let empty = ListNode::from_slice(&[]);
+        let ex123 = ListNode::from_slice(&[1, 2, 3]);
+        let ex321 = ListNode::from_slice(&[3, 2, 1]);
+
+        assert_eq!(ex321.wrap().to_string(), "3, 2, 1");
+        assert_eq!(ex123.wrap().to_string(), "1, 2, 3");
+        assert_eq!(empty.wrap().to_string(), "");
+        let ex123_rev = ListNode::reverse(ex123);
+        assert_eq!(ex123_rev.wrap().to_string(), "3, 2, 1");
     }
 }
