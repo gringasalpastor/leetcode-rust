@@ -10,7 +10,7 @@ impl Solution {
 
         for current_pos in 1..nums.len() {
             if nums[insert_pos as usize] != nums[current_pos as usize] {
-                insert_pos = insert_pos + 1;
+                insert_pos += 1;
                 nums[insert_pos as usize] = nums[current_pos as usize];
             }
         }
