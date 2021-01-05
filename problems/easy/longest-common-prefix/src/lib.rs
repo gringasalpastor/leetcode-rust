@@ -6,13 +6,8 @@ impl Solution {
             return "".into();
         }
 
-        let mut shortest = strs.swap_remove(
-            strs.iter()
-                .enumerate()
-                .min_by(|a, b| a.1.len().cmp(&b.1.len()))
-                .expect("list not empty")
-                .0,
-        );
+        let mut shortest = strs
+            .swap_remove(strs.iter().enumerate().min_by(|a, b| a.1.len().cmp(&b.1.len())).expect("list not empty").0);
 
         for i in 0..shortest.len() {
             for s in &strs {
@@ -43,10 +38,7 @@ mod tests {
         assert_eq!(Solution::longest_common_prefix(svec(&["a", "ab", "xyz"])), "");
         assert_eq!(Solution::longest_common_prefix(svec(&["a", "", "xyz"])), "");
         assert_eq!(Solution::longest_common_prefix(svec(&["ab", "ab", "abc"])), "ab");
-        assert_eq!(
-            Solution::longest_common_prefix(svec(&["flower", "flow", "flight"])),
-            "fl"
-        );
+        assert_eq!(Solution::longest_common_prefix(svec(&["flower", "flow", "flight"])), "fl");
         assert_eq!(Solution::longest_common_prefix(svec(&["dog", "racecar", "car"])), "");
     }
 }
