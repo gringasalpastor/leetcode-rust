@@ -1,18 +1,21 @@
 pub struct Solution;
 
-use std::mem;
-
 impl Solution {
     pub fn longest_common_prefix(mut strs: Vec<String>) -> String {
-        let mut shortest = mem::replace(
-            strs.iter_mut()
-                .min_by(|a, b| a.len().cmp(&b.len()))
-                .unwrap_or(&mut "".into()),
-            String::new(),
+        if strs.is_empty() {
+            return "".into();
+        }
+
+        let mut shortest = strs.swap_remove(
+            strs.iter()
+                .enumerate()
+                .min_by(|a, b| a.1.len().cmp(&b.1.len()))
+                .expect("list not empty")
+                .0,
         );
 
         for i in 0..shortest.len() {
-            for s in strs.iter().filter(|&x| !x.is_empty()) {
+            for s in &strs {
                 if s.as_bytes()[i] != shortest.as_bytes()[i] {
                     shortest.truncate(i);
                     return shortest;
