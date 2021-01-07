@@ -23,7 +23,7 @@ impl Solution {
 mod tests {
     use super::*;
     #[test]
-    fn it_works() {
+    fn remove_duplicates() {
         let rd = Solution::remove_duplicates;
 
         let mut v = vec![];
