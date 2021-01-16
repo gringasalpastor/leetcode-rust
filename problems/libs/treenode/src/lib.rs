@@ -31,6 +31,14 @@ pub fn make_node(val: i32, left: Option<TreeNode>, right: Option<TreeNode>) -> O
     })))
 }
 
+pub fn from_nodes(
+    val: i32,
+    left: Option<Rc<RefCell<TreeNode>>>,
+    right: Option<Rc<RefCell<TreeNode>>>,
+) -> Option<Rc<RefCell<TreeNode>>> {
+    Some(Rc::new(RefCell::new(TreeNode { val: val, left: left, right: right })))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
