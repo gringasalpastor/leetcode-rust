@@ -11,6 +11,7 @@ impl Solution {
         let mut result = vec![vec![1]];
         for i in 0..(num_rows - 1) as usize {
             let mut new_row = Vec::<i32>::new();
+            // NOTE: We could avoid the copy if we could use `Itertools::tuple_windows`
             for slice in iter::once(&0).chain(&result[i]).chain(iter::once(&0)).collect::<Vec<_>>().windows(2) {
                 new_row.push(slice[0] + slice[1]);
             }
