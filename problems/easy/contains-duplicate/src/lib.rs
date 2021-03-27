@@ -16,9 +16,8 @@ impl Solution {
 #[cfg(test)]
 mod tests {
     #[test]
+    use super::*;
     fn contains_duplicate() {
-        use super::*;
-
         assert_eq!(Solution::contains_duplicate(vec![1, 2, 3]), false);
         assert_eq!(Solution::contains_duplicate(vec![1, 2, 3, 4, 3]), true);
     }
