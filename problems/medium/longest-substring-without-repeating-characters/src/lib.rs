@@ -6,16 +6,19 @@ impl Solution {
         let mut longest = 0;
         let mut cur_length = 0;
 
-        let mut visited: [bool; 128] = [false; 128];
+        // Index of last place we saw this char
+        let mut visited: [i32; 128] = [-1; 128];
 
-        for c in s.chars() {
-            if visited[c as usize] {
-                cur_length = 0;
+        for (cur_index, c) in s.chars().enumerate() {
+            let visited_index = visited[c as usize];
+
+            if cur_index as i32 <= cur_length + visited_index  {
+                cur_length = cur_index as i32 - visited_index - 1;
             }
             cur_length += 1;
             longest = cmp::max(cur_length, longest);
 
-            visited[c as usize] = true;
+            visited[c as usize] = cur_index as i32;
         }
 
         return longest;
