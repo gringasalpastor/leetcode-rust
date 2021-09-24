@@ -17,7 +17,13 @@ impl Solution {
             return 0;
         }
 
-        trimmed[0..last_digit_index].parse::<i32>().unwrap_or(if is_neg { i32::min_value() } else { i32::max_value() })
+        trimmed[0..last_digit_index].parse::<i32>().unwrap_or_else(|_| {
+            if is_neg {
+                i32::min_value()
+            } else {
+                i32::max_value()
+            }
+        })
     }
 }
 
