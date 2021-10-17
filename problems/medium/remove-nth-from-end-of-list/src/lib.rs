@@ -15,7 +15,7 @@ impl Solution {
 
         // If removing the first element
         if index == -1 {
-            return ListNode::from_slice(&[]);
+            return None;
         }
 
         let mut current = &mut head;
