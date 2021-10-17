@@ -13,6 +13,11 @@ impl Solution {
         }
         let index = length - n - 1;
 
+        // If removing the first element
+        if index == -1 {
+            return ListNode::from_slice(&[]);
+        }
+
         let mut current = &mut head;
         let mut pos = 0;
         while let Some(ref mut cur) = current {
@@ -38,5 +43,7 @@ mod tests {
         let f_s = ListNode::from_slice;
         let ex12345 = f_s(&[1, 2, 3, 4, 5]);
         assert_eq!(rnfe(ex12345, 2).wrap().to_string(), "1, 2, 3, 5");
+        assert_eq!(rnfe(f_s(&[1]), 1).wrap().to_string(), "");
+        assert_eq!(rnfe(f_s(&[1, 2]), 1).wrap().to_string(), "1");
     }
 }
